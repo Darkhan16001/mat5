@@ -1,0 +1,1842 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>§5 Дұрыс көпжақтар | MATH LAB PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#071525;--nav:#102d49;--card:#173a57;
+ --line:#527e9f;--blue:#86d9ff;--gold:#ffe18e;
+ --green:#8defba;--red:#ffa0ad;--white:#f7fbff
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;width:100%}
+body{background:var(--bg);color:var(--white);font-family:Manrope,Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{
+ outline:3px solid var(--gold);
+ outline-offset:2px;
+}
+
+/* НЕГІЗГІ ҚҰРЫЛЫМ */
+#app{
+ height:100dvh;display:grid;
+ grid-template-columns:265px minmax(0,1fr);
+ grid-template-rows:76px minmax(0,1fr)
+}
+header{
+ grid-column:1/-1;display:flex;align-items:center;
+ justify-content:space-between;gap:12px;padding:9px 20px;
+ background:#102d49;border-bottom:1px solid var(--line)
+}
+.logo{font-weight:800;font-size:29px;line-height:1.15}
+.logo span{color:var(--blue)}
+.subtitle{margin-top:5px;color:#c5ddeb;font-size:12px}
+.headerRight{display:flex;gap:8px;align-items:center}
+.pill{
+ padding:8px 12px;background:#1d4b6d;
+ border:1px solid #638cab;border-radius:25px;
+ font-weight:800;font-size:14px
+}
+.headBtn{
+ padding:10px 13px;color:white;background:#2875a4;
+ border:1px solid #7ab2d3;border-radius:9px;font-weight:800
+}
+aside{
+ grid-column:1;grid-row:2;min-height:0;
+ display:flex;flex-direction:column;overflow-y:auto;
+ padding:12px;background:var(--nav);
+ border-right:2px solid var(--line)
+}
+.sideTitle{
+ color:var(--blue);font-size:13px;font-weight:800;
+ letter-spacing:1px;margin:13px 6px 8px
+}
+.sideBtn,.sideTool{
+ display:block;width:100%;padding:12px;margin:4px 0;
+ border-radius:10px;color:#eef8ff;
+ font-size:15px;text-align:left;font-weight:800
+}
+.sideBtn{background:transparent;border:1px solid transparent}
+.sideBtn:hover{background:#205474}
+.sideBtn.active{
+ background:#276d9b;border-color:#7bbfe9;
+ box-shadow:inset 5px 0 #a5ecff
+}
+.sideBottom{margin-top:auto}
+.sideTool{
+ background:#215578;border:1px solid #638bad;
+ font-size:13px
+}
+.timeBox{
+ margin-top:10px;padding:11px;
+ background:#173d59;border:1px solid #6086a5;border-radius:12px
+}
+.timeRow{
+ display:flex;justify-content:space-between;gap:5px;
+ margin:8px 0;font-size:12px
+}
+.timeRow b{color:var(--gold);font-size:15px}
+.timeBtns{display:flex;gap:5px}
+.timeBtns button{
+ flex:1;padding:8px;color:white;background:#2c79a6;
+ border:0;border-radius:7px;font-weight:800
+}
+
+/* САБАҚ */
+main{
+ grid-column:2;grid-row:2;min-width:0;min-height:0;
+ display:flex;flex-direction:column;
+ background:radial-gradient(ellipse at 80% 0%,#1a486a,#071525 75%)
+}
+#slideView{
+ flex:1;min-height:0;overflow:auto;
+ padding:40px clamp(18px,4vw,64px) 35px;
+ overscroll-behavior:contain
+}
+.slide{width:100%;max-width:1240px;min-width:0;margin:auto}
+.eyebrow{
+ color:var(--blue);font-size:17px;font-weight:800;
+ letter-spacing:1px;margin-bottom:13px
+}
+h1{
+ font-size:clamp(35px,4vw,56px);
+ line-height:1.35;margin:0 0 24px
+}
+.lead{
+ color:#e6f4ff;font-size:clamp(24px,2.5vw,32px);
+ line-height:1.8
+}
+.card{
+ margin:18px 0;padding:26px;min-width:0;
+ background:var(--card);border:2px solid var(--line);
+ border-radius:20px
+}
+.card h3{
+ font-size:clamp(28px,2.8vw,37px);
+ color:var(--blue);margin:0 0 13px;line-height:1.4
+}
+.card p{
+ font-size:clamp(21px,2.2vw,28px);
+ line-height:1.8;margin:12px 0
+}
+strong{color:var(--gold)}
+.formula{
+ margin:19px 0;padding:23px;
+ background:#081e33;border-left:6px solid var(--gold);
+ border-radius:14px;font-size:clamp(29px,3vw,44px);
+ line-height:1.55;text-align:center;font-weight:800;
+ overflow-x:auto
+}
+.step{
+ padding:16px 20px;margin:11px 0;
+ background:#205172;border-left:5px solid var(--blue);
+ border-radius:12px;font-size:clamp(21px,2vw,27px);
+ line-height:1.75
+}
+.step:last-child{background:#1b5344;border-color:var(--green)}
+.tag{
+ display:inline-block;padding:7px 13px;border-radius:8px;
+ background:#286184;color:#c9f2ff;
+ font-size:16px;font-weight:800
+}
+.figure{
+ display:flex;flex-direction:column;
+ justify-content:center;align-items:center;
+ width:100%;min-width:0;margin:19px 0;padding:18px;
+ background:linear-gradient(135deg,#10324f,#205778);
+ border:2px solid #6596b8;border-radius:19px
+}
+.figure svg{
+ display:block;width:100%;height:auto;
+ max-width:650px;max-height:min(43vh,350px);
+ margin:auto;overflow:visible
+}
+.figure figcaption{
+ margin-top:9px;color:#e0f0ff;
+ text-align:center;font-size:20px;font-weight:800
+}
+.grid2{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:16px
+}
+.grid2>*{min-width:0}
+.grid2 .figure{margin:0}
+.grid2 .figure svg{max-height:250px}
+details{
+ margin:15px 0;padding:18px;
+ background:#1b4668;border:1px solid #638eac;border-radius:13px
+}
+summary{color:var(--green);font-size:24px;font-weight:800;cursor:pointer}
+.action{
+ padding:15px 22px;color:white;background:#198bc8;
+ border:0;border-radius:11px;font-size:20px;font-weight:800
+}
+.scoreGrid{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:11px
+}
+.score{
+ padding:16px;text-align:center;background:#215575;
+ border:1px solid #6893b1;border-radius:12px;
+ font-size:21px;font-weight:800
+}
+.score b{display:block;color:var(--gold);font-size:42px}
+.choice{
+ width:100%;display:block;margin:11px 0;padding:19px;
+ color:white;background:#2b5f82;
+ border:2px solid #6895b3;border-radius:12px;
+ text-align:left;font-size:24px;font-weight:800
+}
+.choice.correct{background:#168164}
+.choice.wrong{background:#a94359}
+.choice:disabled{cursor:default}
+
+/* АРТҚА ЖӘНЕ КЕЛЕСІ — СОЛ ЖАҚ */
+.slideFooter{
+ flex-shrink:0;display:flex;justify-content:flex-start;
+ align-items:center;gap:23px;padding:11px 20px;
+ background:#0c2943;border-top:1px solid #476d8b
+}
+.footerBtns{display:flex;gap:9px}
+.footerBtns button{
+ min-width:125px;padding:12px 18px;
+ border-radius:9px;border:1px solid #76afd0;
+ color:white;background:#276d9b;
+ font-size:18px;font-weight:800
+}
+.footerBtns button:disabled{opacity:.35}
+#counter{font-size:20px;font-weight:800;color:var(--blue)}
+.credit{margin-left:auto;font-size:14px;font-weight:800}
+
+/* КАЛЬКУЛЯТОР */
+#calculator{
+ display:none;position:fixed;z-index:150;
+ top:87px;left:275px;width:242px;
+ max-height:82dvh;overflow:auto;padding:8px;
+ background:#173a57;border:1px solid #82a7c2;
+ border-radius:12px;box-shadow:0 12px 35px #0008
+}
+#calculator.open{display:block}
+.calcHead{
+ display:flex;align-items:center;justify-content:space-between;
+ padding:7px;background:#3c6b8e;border-radius:7px;
+ font-size:12px;font-weight:800;cursor:move;touch-action:none
+}
+.calcHead button{
+ padding:4px 8px;background:#c03f58;
+ color:white;border:0;border-radius:5px
+}
+#calcInput{
+ display:block;width:100%;height:40px;
+ margin:7px 0;padding:6px;background:#081e33;
+ color:white;border:1px solid #7da0bb;
+ border-radius:7px;text-align:right;font-size:18px
+}
+.calcKeys{
+ display:grid;grid-template-columns:repeat(5,1fr);gap:4px
+}
+.calcKeys button{
+ min-width:0;min-height:34px;padding:4px 0;
+ background:#3e698c;border:0;border-radius:5px;
+ color:white;font-size:11px
+}
+
+/* СЕНСОРЛЫҚ ТАҚТА */
+#whiteboard{
+ display:none;position:fixed;inset:0;z-index:300;
+ flex-direction:column;background:white;color:#27465e
+}
+#whiteboard.open{display:flex}
+.boardHeader{
+ flex-shrink:0;min-height:60px;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:8px 14px;gap:10px;background:#f4f9fd;
+ border-bottom:1px solid #d1e0e9
+}
+.boardHeader b{font-size:20px}
+.boardHeader small{display:block;color:#748c9e;font-size:11px}
+.boardHeader button{
+ padding:10px;color:white;background:#c04158;
+ border:0;border-radius:9px;font-size:13px;font-weight:800
+}
+#boardArea{position:relative;flex:1;min-height:0;overflow:hidden}
+#boardCanvas{
+ display:block;width:100%;height:100%;
+ touch-action:none;cursor:crosshair
+}
+#boardArea.eraserMode #boardCanvas{cursor:none}
+
+/* ӨШІРГІШ: КӨРСЕТКІШ 30%, ӨШІРУ 100% */
+#eraserCursor{
+ display:none;position:absolute;z-index:25;
+ left:0;top:0;pointer-events:none;
+ transform:translate(-50%,-50%);
+ border-radius:50%;
+ background:rgba(45,134,219,.30);
+ border:2px solid rgba(22,99,175,.30)
+}
+#boardStatus{
+ position:absolute;left:10px;bottom:10px;pointer-events:none;
+ padding:5px 10px;border-radius:20px;
+ border:1px solid #d0e0eb;background:#fffffff0;
+ font-size:11px
+}
+.boardToolbar{
+ flex-shrink:0;padding:5px;background:#f3f8fc;
+ border-top:1px solid #d1e0eb
+}
+.toolbarRow{
+ display:flex;align-items:center;gap:5px;
+ overflow-x:auto;scrollbar-width:thin;padding:3px 0
+}
+.toolGroup{
+ display:flex;align-items:center;flex-shrink:0;gap:4px;
+ padding:4px 6px;background:white;
+ border:1px solid #d3e1eb;border-radius:10px
+}
+.toolGroup label{font-size:10px;color:#7c91a2;font-weight:800}
+.tool{
+ min-height:34px;padding:7px 9px;
+ background:#eaf2f9;color:#2d526d;
+ border:0;border-radius:7px;
+ white-space:nowrap;font-size:12px;font-weight:800
+}
+.tool.active{background:#1889c9;color:white}
+#boardColor{width:36px;height:34px;border:0}
+#boardWidth{width:100px}
+#pageCount,#zoomCount{
+ min-width:45px;font-size:12px;font-weight:800;text-align:center
+}
+.boardHelp{
+ font-size:10px;color:#70889b;text-align:center;line-height:1.5
+}
+#boardFile{display:none}
+#pagesPanel{
+ display:none;position:absolute;z-index:30;
+ top:12px;right:12px;width:230px;max-height:65%;
+ overflow:auto;padding:12px;background:#f8fcff;
+ border:1px solid #d1e0eb;border-radius:12px;
+ box-shadow:0 10px 30px #0003
+}
+#pagesPanel.open{display:block}
+#pagesPanel button{
+ display:block;width:100%;margin:6px 0;padding:9px;
+ background:white;color:#2d536e;border:1px solid #d1e0eb;
+ border-radius:8px;text-align:left;font-size:12px
+}
+#pagesPanel button.active{background:#dbf0ff}
+.instrument{
+ display:none;position:absolute;z-index:15;
+ user-select:none;pointer-events:none;touch-action:none;
+ transform:translate(-50%,-50%) rotate(var(--rot,0deg))
+ scale(var(--scale,1));transform-origin:center center;
+ filter:drop-shadow(0 4px 7px #0003)
+}
+.instrument.visible{display:block}
+.instrument svg{display:block;pointer-events:none}
+.instControls{
+ position:absolute;top:-43px;left:50%;
+ transform:translateX(-50%);display:flex;gap:3px;
+ pointer-events:auto;white-space:nowrap
+}
+.instControls button{
+ pointer-events:auto;padding:6px 8px;
+ background:#285a78;border:0;border-radius:5px;
+ color:white;font-size:11px;font-weight:800
+}
+.instControls .drag{
+ background:#168bcc;cursor:grab;touch-action:none
+}
+.instControls .close{background:#bd4059}
+
+@media(max-width:1050px){
+ #app{grid-template-columns:185px minmax(0,1fr)}
+ aside{padding:7px}
+ .sideBtn{font-size:12px;padding:9px 7px}
+ .sideTool{font-size:11px}
+ .pill{display:none}
+ .grid2{grid-template-columns:1fr}
+ .card p{font-size:22px}
+ #calculator{left:190px}
+}
+@media(max-width:650px){
+ #app{
+  grid-template-columns:120px minmax(0,1fr);
+  grid-template-rows:65px minmax(0,1fr)
+ }
+ header{padding:6px}
+ .logo{font-size:16px}
+ .subtitle{display:none}
+ .headBtn{padding:7px;font-size:12px}
+ aside{padding:4px}
+ .sideTitle{font-size:10px}
+ .sideBtn,.sideTool{font-size:10px;padding:8px 5px}
+ #slideView{padding:25px 10px 18px}
+ h1{font-size:27px}
+ .lead{font-size:19px}
+ .card{padding:14px}
+ .card h3{font-size:23px}
+ .card p{font-size:18px}
+ .step{font-size:18px}
+ .formula{font-size:24px}
+ .slideFooter{padding:7px;gap:7px}
+ .footerBtns{gap:4px}
+ .footerBtns button{min-width:auto;font-size:11px;padding:8px}
+ #counter{font-size:12px}
+ .credit{display:none}
+ .scoreGrid{grid-template-columns:1fr}
+ .choice{font-size:19px}
+ #calculator{left:5px}
+ .boardHeader b{font-size:13px}
+ .boardHeader button{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+<header>
+ <div>
+  <div class="logo">MATH LAB <span>PRO</span></div>
+  <div class="subtitle">§5. Дұрыс көпжақтар · Геометрия</div>
+ </div>
+ <div class="headerRight">
+  <span class="pill">80 МИНУТ</span>
+  <span class="pill">⭐ <span id="stars">0</span></span>
+  <button class="headBtn" onclick="openBoard()">✎ Тақта</button>
+  <button class="headBtn" onclick="toggleFullscreen()">⛶</button>
+ </div>
+</header>
+
+<aside>
+ <div class="sideTitle">САБАҚ БӨЛІМДЕРІ</div>
+ <div id="sectionButtons"></div>
+ <div class="sideBottom">
+  <div class="sideTitle">ҚҰРАЛДАР</div>
+  <button class="sideTool" onclick="openCalc(false)">🧮 Калькулятор</button>
+  <button class="sideTool" onclick="openCalc(true)">∑ Ғылыми калькулятор</button>
+  <button class="sideTool" onclick="openBoard()">✎ Интерактивті тақта</button>
+  <div class="timeBox">
+   <div class="timeRow"><span>Алматы уақыты</span><b id="clock"></b></div>
+   <div class="timeRow"><span>Қалған уақыт</span><b id="remaining">80:00</b></div>
+   <div class="timeRow"><span>Өткен уақыт</span><b id="elapsed">00:00</b></div>
+   <div class="timeBtns">
+    <button onclick="startTimer()">▶</button>
+    <button onclick="pauseTimer()">Ⅱ</button>
+    <button onclick="resetTimer()">↻</button>
+   </div>
+  </div>
+ </div>
+</aside>
+
+<main>
+ <div id="slideView"><div class="slide" id="slideContent"></div></div>
+ <div class="slideFooter">
+  <div class="footerBtns">
+   <button id="prevBtn" onclick="previousSlide()">← Артқа</button>
+   <button id="nextBtn" onclick="nextSlide()">Келесі →</button>
+  </div>
+  <span id="counter">1 / 37</span>
+  <span class="credit">BY DARKHAN</span>
+ </div>
+</main>
+</div>
+
+<!-- КАЛЬКУЛЯТОР -->
+<div id="calculator">
+ <div class="calcHead" id="calcHandle">
+  <span id="calcTitle">Калькулятор</span>
+  <button onclick="closeCalc()">✕</button>
+ </div>
+ <input id="calcInput" placeholder="0" aria-label="Есептеу өрнегі">
+ <div class="calcKeys" id="calcKeys"></div>
+</div>
+
+<!-- АҚ ТАҚТА -->
+<div id="whiteboard">
+ <div class="boardHeader">
+  <div>
+   <b>MATH LAB WHITEBOARD</b>
+   <small>Саусақ · Интерактивті қалам · Толық өшіргіш</small>
+  </div>
+  <button onclick="closeBoard()">✕ Сабаққа қайту</button>
+ </div>
+
+ <div id="boardArea">
+  <canvas id="boardCanvas"></canvas>
+  <div id="eraserCursor"></div>
+  <div id="boardStatus">Қалам · 100%</div>
+
+  <div id="pagesPanel">
+   <b>Тақта беттері</b>
+   <div id="pagesList"></div>
+  </div>
+
+  <div class="instrument" id="ruler">
+   <div class="instControls">
+    <button class="drag">⠿ Жылжыту</button>
+    <button onclick="resizeInstrument('ruler',.8)">−</button>
+    <button onclick="resizeInstrument('ruler',1.25)">+</button>
+    <button onclick="rotateInstrument('ruler',-15)">↶</button>
+    <button onclick="rotateInstrument('ruler',15)">↷</button>
+    <button class="close" onclick="hideInstrument('ruler')">✕</button>
+   </div>
+   <svg id="rulerSVG" width="420" height="90"
+    viewBox="0 0 420 90"></svg>
+  </div>
+
+  <div class="instrument" id="protractor">
+   <div class="instControls">
+    <button class="drag">⠿ Жылжыту</button>
+    <button onclick="resizeInstrument('protractor',.8)">−</button>
+    <button onclick="resizeInstrument('protractor',1.25)">+</button>
+    <button onclick="rotateInstrument('protractor',-15)">↶</button>
+    <button onclick="rotateInstrument('protractor',15)">↷</button>
+    <button class="close" onclick="hideInstrument('protractor')">✕</button>
+   </div>
+   <svg id="protractorSVG" width="380" height="210"
+    viewBox="0 0 380 210"></svg>
+  </div>
+
+  <div class="instrument" id="square">
+   <div class="instControls">
+    <button class="drag">⠿ Жылжыту</button>
+    <button onclick="resizeInstrument('square',.8)">−</button>
+    <button onclick="resizeInstrument('square',1.25)">+</button>
+    <button onclick="rotateInstrument('square',-15)">↶</button>
+    <button onclick="rotateInstrument('square',15)">↷</button>
+    <button class="close" onclick="hideInstrument('square')">✕</button>
+   </div>
+   <svg width="290" height="290" viewBox="0 0 290 290">
+    <path d="M18 18L18 274L274 274Z M76 76L76 225L225 225Z"
+     fill="#8cc9ed" fill-opacity=".45" fill-rule="evenodd"
+     stroke="#287fab" stroke-width="4"/>
+    <text x="28" y="252" fill="#185779" font-size="17">90°</text>
+   </svg>
+  </div>
+ </div>
+
+ <div class="boardToolbar">
+  <div class="toolbarRow">
+   <div class="toolGroup">
+    <label>БЕТТЕР</label>
+    <button class="tool" onclick="prevBoardPage()">◀</button>
+    <span id="pageCount">1 / 1</span>
+    <button class="tool" onclick="nextBoardPage()">▶</button>
+    <button class="tool" onclick="addBoardPage()">+ Бет</button>
+    <button class="tool" onclick="togglePages()">▦ Беттер</button>
+    <button class="tool" onclick="deleteBoardPage()">Өшіру</button>
+   </div>
+   <div class="toolGroup">
+    <label>ЖАЗУ</label>
+    <button class="tool" data-tool="hand" onclick="selectTool('hand')">✋ Қол</button>
+    <button class="tool active" data-tool="pen" onclick="selectTool('pen')">✎ Қалам</button>
+    <button class="tool" data-tool="highlighter" onclick="selectTool('highlighter')">🖍 Бояу</button>
+    <button class="tool" data-tool="eraser" onclick="selectTool('eraser')">◯ Өшіргіш</button>
+    <button class="tool" data-tool="text" onclick="selectTool('text')">T Мәтін</button>
+   </div>
+   <div class="toolGroup">
+    <label>ФИГУРАЛАР</label>
+    <button class="tool" data-tool="line" onclick="selectTool('line')">╱ Түзу</button>
+    <button class="tool" data-tool="arrow" onclick="selectTool('arrow')">➜</button>
+    <button class="tool" data-tool="rect" onclick="selectTool('rect')">▭</button>
+    <button class="tool" data-tool="circle" onclick="selectTool('circle')">◯</button>
+    <button class="tool" data-tool="triangle" onclick="selectTool('triangle')">△</button>
+    <button class="tool" data-tool="table" onclick="selectTool('table')">▦</button>
+    <button class="tool" data-tool="angle" onclick="selectTool('angle')">∠</button>
+   </div>
+  </div>
+  <div class="toolbarRow">
+   <div class="toolGroup">
+    <label>ГЕОМЕТРИЯ</label>
+    <button class="tool" data-tool="compass" onclick="selectTool('compass')">◉ Циркуль</button>
+    <button class="tool" onclick="toggleInstrument('ruler')">📏 Сызғыш</button>
+    <button class="tool" onclick="toggleInstrument('protractor')">◠ Транспортир</button>
+    <button class="tool" onclick="toggleInstrument('square')">📐 Үшбұрыш</button>
+    <button class="tool" onclick="toggleGrid()">⊞ Тор</button>
+   </div>
+   <div class="toolGroup">
+    <label>ТҮС / ӨЛШЕМ</label>
+    <input id="boardColor" type="color" value="#1979cc">
+    <input id="boardWidth" type="range" min="1" max="25" value="5">
+   </div>
+   <div class="toolGroup">
+    <label>БАСҚАРУ</label>
+    <button class="tool" onclick="undoBoard()">↶</button>
+    <button class="tool" onclick="redoBoard()">↷</button>
+    <button class="tool" onclick="zoomBoard(.8)">−</button>
+    <span id="zoomCount">100%</span>
+    <button class="tool" onclick="zoomBoard(1.25)">+</button>
+    <button class="tool" onclick="resetBoardView()">⌖</button>
+    <button class="tool" onclick="clearBoard()">Тазалау</button>
+    <button class="tool" onclick="document.getElementById('boardFile').click()">+ Сурет</button>
+    <button class="tool" onclick="exportBoard()">↓ PNG</button>
+    <input id="boardFile" type="file" accept="image/*">
+   </div>
+  </div>
+  <div class="boardHelp">
+   Өшіргіш жазуды 100% жояды, ал оның өлшемін
+   көрсететін көк дөңгелегі 30% ғана көрінеді.
+  </div>
+ </div>
+</div>
+
+<script>
+"use strict";
+
+/* ===== 1. ДҰРЫС КӨПЖАҚ СЫЗБАЛАРЫ ===== */
+
+/* Сызбалар — кеңістіктік денелердің шартты
+   екіөлшемді бейнелері. */
+
+function diagram(type){
+ const P={
+  tetra:`
+   <polygon points="215,25 74,263 360,263"
+    fill="#68c5f9" fill-opacity=".38"/>
+   <polygon points="215,25 220,177 360,263"
+    fill="#aa95f0" fill-opacity=".36"/>
+   <path d="M215 25L74 263L360 263L215 25
+    M215 25L220 177"
+    fill="none" stroke="#beebff" stroke-width="4"/>
+   <path d="M74 263L220 177L360 263"
+    fill="none" stroke="#beebff"
+    stroke-width="3" stroke-dasharray="8 7"/>
+  `,
+  cube:`
+   <polygon points="84,108 265,108 265,266 84,266"
+    fill="#6bc6f9" fill-opacity=".39"/>
+   <polygon points="84,108 150,49 331,49 265,108"
+    fill="#ae97ef" fill-opacity=".50"/>
+   <polygon points="265,108 331,49 331,207 265,266"
+    fill="#75c8fa" fill-opacity=".36"/>
+   <path d="M84 108L150 49H331L265 108H84V266H265V108
+    M265 266L331 207V49"
+    fill="none" stroke="#beebff" stroke-width="4"/>
+   <path d="M84 266L150 207H331 M150 49V207"
+    fill="none" stroke="#beebff" stroke-width="3"
+    stroke-dasharray="8 7"/>
+  `,
+  octa:`
+   <polygon points="215,22 85,163 215,305 355,163"
+    fill="#6bc5f9" fill-opacity=".35"/>
+   <polygon points="215,22 215,170 355,163"
+    fill="#a995ef" fill-opacity=".45"/>
+   <path d="M215 22L85 163L215 305L355 163Z
+    M215 22L215 170L215 305
+    M85 163L215 170L355 163"
+    fill="none" stroke="#beebff" stroke-width="4"/>
+  `,
+  dodeca:`
+   <polygon points="157,35 271,35 358,105 328,236
+    214,303 100,236 70,105"
+    fill="#6bc4f7" fill-opacity=".26"
+    stroke="#beebff" stroke-width="4"/>
+   <polygon points="160,110 260,110 290,205 210,267 130,205"
+    fill="#aa96f0" fill-opacity=".40"
+    stroke="#beebff" stroke-width="4"/>
+   <path d="M157 35L160 110M271 35L260 110
+    M358 105L290 205M328 236L290 205
+    M214 303L210 267M100 236L130 205
+    M70 105L160 110"
+    fill="none" stroke="#beebff" stroke-width="3"/>
+  `,
+  icosa:`
+   <polygon points="215,17 105,75 68,174 137,280
+    290,280 366,174 326,75"
+    fill="#6dc8fb" fill-opacity=".24"
+    stroke="#beebff" stroke-width="4"/>
+   <polygon points="215,17 137,148 215,222 290,148"
+    fill="#a993ed" fill-opacity=".42"/>
+   <path d="M215 17L137 148L68 174
+    M215 17L290 148L366 174
+    M105 75L137 148L215 222L290 148L326 75
+    M68 174L215 222L366 174
+    M137 148L137 280L215 222L290 280L290 148
+    M137 280L215 303L290 280"
+    fill="none" stroke="#beebff" stroke-width="3"/>
+  `
+ };
+ return `<svg viewBox="0 0 440 330"
+ xmlns="http://www.w3.org/2000/svg"
+ role="img" aria-label="Дұрыс көпжақтың шартты сызбасы">
+ ${P[type]||P.cube}</svg>`;
+}
+function picture(type,title){
+ return `<figure class="figure">
+ ${diagram(type)}<figcaption>${title}</figcaption>
+ </figure>`;
+}
+
+/* ===== 2. 37 САБАҚ БЕТІ ===== */
+const slides=[];
+function add(section,title,html){slides.push({section,title,html})}
+function card(title,body){
+ return `<div class="card"><h3>${title}</h3>${body}</div>`;
+}
+function steps(lines){
+ return lines.map((s,i)=>`<div class="step">
+ <strong>${i+1}-қадам.</strong> ${s}</div>`).join("");
+}
+function solution(title,lines){
+ return `<details><summary>${title} — жауабын көру</summary>
+ ${steps(lines)}</details>`;
+}
+function example(title,given,lines,fig){
+ return card(title,`${picture(fig,"Шартты сызба")}
+ <p><strong>Берілгені:</strong> ${given}</p>${steps(lines)}`);
+}
+
+/* КІРІСПЕ */
+add("intro","§5. Дұрыс көпжақтар",`
+ <p class="lead">Дұрыс көпжақ — барлық жақтары бірдей
+ дұрыс көпбұрыштардан тұратын және әр төбесінде
+ бірдей сандағы жақтар түйісетін дөңес көпжақ.
+ Мұндай денелердің дәл бес түрі бар.</p>
+
+ <div class="grid2">
+  ${picture("tetra","Дұрыс тетраэдр")}
+  ${picture("cube","Куб — гексаэдр")}
+  ${picture("octa","Дұрыс октаэдр")}
+  ${picture("dodeca","Дұрыс додекаэдр")}
+  ${picture("icosa","Дұрыс икосаэдр")}
+ </div>
+
+ ${card("Сабақ мақсаттары",`
+  <p>1. Дұрыс көпжақтың анықтамасын білу.</p>
+  <p>2. Бес дұрыс көпжақты тану.</p>
+  <p>3. Жақ, төбе, қыр санын анықтау.</p>
+  <p>4. Эйлер формуласын қолдану.</p>
+  <p>5. Бет ауданы мен көлем есептерін шығару.</p>
+ `)}
+ <div class="formula">V − E + F = 2</div>
+`);
+
+/* 9 ТҮСІНДІРМЕ */
+const theory=[
+ ["Дұрыс көпжақ деген не?","tetra",
+ "Дұрыс көпжақтың барлық жақтары тең дұрыс көпбұрыштар, ал барлық төбелерінде бірдей мөлшерде жақ түйіседі.",
+ ["Олар дөңес көпжақтар.",
+  "Барлық жақтарының пішіні мен өлшемі бірдей.",
+  "Бір төбедегі жақтар саны өзгермейді.",
+  "Бес түрі бар: тетраэдр, куб, октаэдр, додекаэдр, икосаэдр."]],
+ ["Дұрыс тетраэдр","tetra",
+ "Дұрыс тетраэдр — төрт теңқабырғалы үшбұрыштан құралған дұрыс көпжақ.",
+ ["Жақтар саны F = 4.","Қырлар саны E = 6.",
+  "Төбелер саны V = 4.",
+  "Әр төбеде үш үшбұрыш түйіседі."]],
+ ["Куб немесе гексаэдр","cube",
+ "Кубтың барлық жақтары тең шаршылардан тұрады.",
+ ["Жақтар саны F = 6.","Қырлар саны E = 12.",
+  "Төбелер саны V = 8.",
+  "Әр төбеде үш шаршы түйіседі."]],
+ ["Дұрыс октаэдр","octa",
+ "Дұрыс октаэдр — сегіз теңқабырғалы үшбұрыштан тұратын дұрыс көпжақ.",
+ ["Жақтар саны F = 8.","Қырлар саны E = 12.",
+  "Төбелер саны V = 6.",
+  "Әр төбеде төрт үшбұрыш түйіседі."]],
+ ["Дұрыс додекаэдр","dodeca",
+ "Дұрыс додекаэдрдің он екі жағы да дұрыс бесбұрыштардан тұрады.",
+ ["Жақтар саны F = 12.","Қырлар саны E = 30.",
+  "Төбелер саны V = 20.",
+  "Әр төбеде үш бесбұрыш түйіседі."]],
+ ["Дұрыс икосаэдр","icosa",
+ "Дұрыс икосаэдр — жиырма теңқабырғалы үшбұрыштан тұратын дұрыс көпжақ.",
+ ["Жақтар саны F = 20.","Қырлар саны E = 30.",
+  "Төбелер саны V = 12.",
+  "Әр төбеде бес үшбұрыш түйіседі."]],
+ ["Эйлер формуласы","cube",
+ "Кез келген дөңес көпжақ үшін төбелер, қырлар және жақтар арасында Эйлер теңдігі орындалады.",
+ ["V — төбелер саны.",
+  "E — қырлар саны.",
+  "F — жақтар саны.",
+  "V − E + F = 2.",
+  "Куб үшін: 8 − 12 + 6 = 2."]],
+ ["Жақ, қыр және төбе байланысы","octa",
+ "Әрбір қыр екі жаққа тиесілі болғандықтан, жақтардың қабырғаларын санағанда әр қыр екі рет есептеледі.",
+ ["Егер әр жақ n-бұрыш болса, nF = 2E.",
+  "Әр төбеде q қыр түйіссе, qV = 2E.",
+  "Бұл теңдіктер арқылы белгісіз сандарды табуға болады.",
+  "Эйлер формуласы нәтижені тексеруге көмектеседі."]],
+ ["Неліктен бес дұрыс көпжақ бар?","icosa",
+ "Дұрыс көпжақтың әр төбесіндегі жазық бұрыштар қосындысы 360°-тан кіші болуы керек.",
+ ["Үшбұрыштың әр бұрышы 60°.",
+  "Шаршының әр бұрышы 90°.",
+  "Дұрыс бесбұрыштың әр бұрышы 108°.",
+  "Әр төбеде кемінде үш жақ түйіседі.",
+  "Бұл шектеулер тек бес дұрыс көпжаққа мүмкіндік береді."]]
+];
+
+theory.forEach(t=>add("theory",t[0],`
+ <p class="lead">${t[2]}</p>
+ ${picture(t[1],t[0])}
+ ${card("Толық түсіндірме",t[3].map(x=>`<p>✦ ${x}</p>`).join(""))}
+ <button class="action" onclick="openBoard()">✎ Тақтада көрсету</button>
+`));
+
+/* 4 КОНСПЕКТ */
+const topics=[
+ {
+  title:"Дұрыс көпжақтардың түрлері",fig:"tetra",
+  notes:[
+   "Дұрыс тетраэдр: F = 4, E = 6, V = 4.",
+   "Куб: F = 6, E = 12, V = 8.",
+   "Октаэдр: F = 8, E = 12, V = 6.",
+   "Додекаэдр: F = 12, E = 30, V = 20.",
+   "Икосаэдр: F = 20, E = 30, V = 12."
+  ],
+  examples:[
+   ["Тетраэдрдің қырлары","4 үшбұрышты жақ бар.",[
+    "Әр үшбұрышта 3 қабырға бар.",
+    "Барлық есептелетін қабырғалар: 4 × 3 = 12.",
+    "Әр қыр екі жаққа ортақ.",
+    "E = 12 ÷ 2 = 6.",
+    "Жауабы: 6 қыр."
+   ]],
+   ["Кубтың қырлары","6 шаршы жақ бар.",[
+    "Әр жақта 4 қабырға бар.",
+    "Жалпы саны: 6 × 4 = 24.",
+    "Әр қыр екі рет саналады.",
+    "E = 24 ÷ 2 = 12.",
+    "Жауабы: 12 қыр."
+   ]]
+  ],
+  tasks:[
+   ["Октаэдрдің қырларын жақтары арқылы табыңдар.",[
+    "8 жақтың әрқайсысында 3 қабырға.",
+    "E = 8 × 3 ÷ 2.",
+    "Жауабы: 12 қыр."
+   ]],
+   ["Икосаэдрдің қырларын табыңдар.",[
+    "20 үшбұрышты жақ бар.",
+    "E = 20 × 3 ÷ 2.",
+    "Жауабы: 30 қыр."
+   ]]
+  ]
+ },
+ {
+  title:"Эйлер формуласы",fig:"cube",
+  notes:[
+   "Эйлер формуласы: V − E + F = 2.",
+   "V — төбелер саны.",
+   "E — қырлар саны.",
+   "F — жақтар саны.",
+   "Белгісіз төбелер саны: V = E − F + 2.",
+   "Белгісіз қырлар саны: E = V + F − 2."
+  ],
+  examples:[
+   ["Додекаэдрдің төбелері","E = 30, F = 12.",[
+    "V − E + F = 2.",
+    "V = E − F + 2.",
+    "V = 30 − 12 + 2.",
+    "Жауабы: 20 төбе."
+   ]],
+   ["Белгісіз қырлар","V = 12, F = 20.",[
+    "E = V + F − 2.",
+    "E = 12 + 20 − 2.",
+    "Жауабы: 30 қыр."
+   ]]
+  ],
+  tasks:[
+   ["V = 8, F = 6. Қырлар саны?",[
+    "E = 8 + 6 − 2.",
+    "Жауабы: 12 қыр."
+   ]],
+   ["E = 12, F = 8. Төбелер саны?",[
+    "V = 12 − 8 + 2.",
+    "Жауабы: 6 төбе."
+   ]]
+  ]
+ },
+ {
+  title:"Дұрыс көпжақтың бет ауданы",fig:"tetra",
+  notes:[
+   "Кубтың толық беті: S = 6a².",
+   "Теңқабырғалы үшбұрыштың ауданы: S₁ = a²√3 ÷ 4.",
+   "Дұрыс тетраэдрдің толық беті: S = a²√3.",
+   "Дұрыс октаэдрдің толық беті: S = 2a²√3.",
+   "Дұрыс икосаэдрдің толық беті: S = 5a²√3.",
+   "a — көпжақтың қыры."
+  ],
+  examples:[
+   ["Кубтың толық беті","a = 7 см.",[
+    "S = 6a².",
+    "a² = 49.",
+    "S = 6 × 49.",
+    "Жауабы: 294 см²."
+   ]],
+   ["Тетраэдрдің толық беті","a = 6 см.",[
+    "S = a²√3.",
+    "a² = 36.",
+    "Жауабы: 36√3 см²."
+   ]]
+  ],
+  tasks:[
+   ["Октаэдр қыры 5 см. Толық беті?",[
+    "S = 2a²√3.",
+    "S = 2 × 25√3.",
+    "Жауабы: 50√3 см²."
+   ]],
+   ["Икосаэдр қыры 4 см. Толық беті?",[
+    "S = 5a²√3.",
+    "S = 5 × 16√3.",
+    "Жауабы: 80√3 см²."
+   ]]
+  ]
+ },
+ {
+  title:"Куб пен тетраэдрдің көлемі",fig:"cube",
+  notes:[
+   "Кубтың көлемі: V = a³.",
+   "Дұрыс тетраэдрдің көлемі: V = a³√2 ÷ 12.",
+   "a — қыр ұзындығы.",
+   "Көлем см³, дм³ немесе м³ арқылы өлшенеді.",
+   "Куб қыры екі есе өссе, көлемі сегіз есе өседі."
+  ],
+  examples:[
+   ["Куб көлемі","a = 9 см.",[
+    "V = a³.",
+    "V = 9³.",
+    "Жауабы: 729 см³."
+   ]],
+   ["Тетраэдр көлемі","a = 6 см.",[
+    "V = a³√2 ÷ 12.",
+    "a³ = 216.",
+    "V = 216√2 ÷ 12.",
+    "Жауабы: 18√2 см³."
+   ]]
+  ],
+  tasks:[
+   ["Куб қыры 12 см. Көлемі?",[
+    "V = a³.",
+    "V = 12³.",
+    "Жауабы: 1728 см³."
+   ]],
+   ["Тетраэдр қыры 12 см. Көлемі?",[
+    "V = a³√2 ÷ 12.",
+    "V = 1728√2 ÷ 12.",
+    "Жауабы: 144√2 см³."
+   ]]
+  ]
+ }
+];
+
+topics.forEach((t,i)=>{
+ const notes=t.notes.map(x=>`<p>✦ ${x}</p>`).join("");
+ const tasks=t.tasks.map((x,j)=>solution(
+  (j+1)+"-өзіндік есеп. "+x[0],x[1]
+ )).join("");
+
+ add("notes","Конспект "+(i+1)+". "+t.title,`
+  <span class="tag">ДӘПТЕРГЕ ЖАЗЫП АЛЫҢДАР</span>
+  ${picture(t.fig,t.title)}
+  ${card("Негізгі ережелер",notes)}
+  ${card("Өзіндік жұмыс — 2 есеп",tasks)}
+ `);
+ add("notes","Конспект "+(i+1)+". Шығарылған мысалдар",`
+  <p class="lead">Есептерді толық берілгенімен,
+  формуласымен және жауабымен жазып алыңдар.</p>
+  ${t.examples.map(e=>example(e[0],e[1],e[2],t.fig)).join("")}
+ `);
+ add("notes","Конспект "+(i+1)+". Бекіту",`
+  ${picture(t.fig,"Қайталау сызбасы")}
+  ${card("Ережелер",notes)}
+  ${card("Өзіндік жұмыс",tasks)}
+  <button class="action" onclick="openBoard()">✎ Тақтада шығару</button>
+ `);
+});
+
+/* 8 ЕСЕП — 4 ДЕҢГЕЙ */
+const levels=[
+ ["I деңгей","Кубтың неше төбесі, қыры және жағы бар?",[
+  "Кубтың 6 жағы бар.",
+  "Әр жақ — шаршы.",
+  "Кубтың 8 төбесі, 12 қыры бар.",
+  "Жауабы: V = 8, E = 12, F = 6."
+ ],"cube"],
+ ["I деңгей","Дұрыс тетраэдр қыры 8 см. Толық бетінің ауданын табыңдар.",[
+  "S = a²√3.",
+  "a² = 64.",
+  "Жауабы: 64√3 см²."
+ ],"tetra"],
+ ["II деңгей","Октаэдрдің 8 жағы және 12 қыры бар. Эйлер формуласымен төбелер санын табыңдар.",[
+  "V = E − F + 2.",
+  "V = 12 − 8 + 2.",
+  "Жауабы: 6 төбе."
+ ],"octa"],
+ ["II деңгей","Додекаэдрдің әр жағы бесбұрыш. 12 жағы бар. Қырларын есептеңдер.",[
+  "Әр жақта 5 қабырға.",
+  "Барлығы: 12 × 5 = 60.",
+  "Әр қыр екі рет саналады.",
+  "Жауабы: E = 30."
+ ],"dodeca"],
+ ["III деңгей","Куб қыры 11 см. Толық беті мен көлемін табыңдар.",[
+  "S = 6a² = 6 × 121.",
+  "S = 726 см².",
+  "V = a³ = 1331 см³.",
+  "Жауабы: 726 см² және 1331 см³."
+ ],"cube"],
+ ["III деңгей","Икосаэдрдің 20 жағы, 30 қыры бар. Төбелер саны?",[
+  "Эйлер формуласы: V − E + F = 2.",
+  "V = 30 − 20 + 2.",
+  "Жауабы: 12 төбе."
+ ],"icosa"],
+ ["IV деңгей","Дұрыс тетраэдрдің толық беті 100√3 см². Қыры мен көлемін табыңдар.",[
+  "S = a²√3.",
+  "a² = 100, сондықтан a = 10 см.",
+  "V = a³√2 ÷ 12.",
+  "V = 1000√2 ÷ 12.",
+  "Жауабы: 250√2 ÷ 3 см³."
+ ],"tetra"],
+ ["IV деңгей","Дұрыс октаэдрдің толық беті 162√3 см². Қырының ұзындығын табыңдар.",[
+  "S = 2a²√3.",
+  "2a²√3 = 162√3.",
+  "2a² = 162.",
+  "a² = 81.",
+  "Жауабы: a = 9 см."
+ ],"octa"]
+];
+levels.forEach((t,i)=>add("tasks",t[0]+" · "+(i+1)+"-есеп",`
+ <span class="tag">4 ДЕҢГЕЙЛІ ТАПСЫРМА</span>
+ ${card("Есеп шарты",`<p class="lead">${t[1]}</p>`)}
+ ${picture(t[3],"Шартты геометриялық сызба")}
+ ${card("Орындау тәртібі",`
+  <p>1. Дененің түрін анықтаңдар.</p>
+  <p>2. Жақ, қыр, төбелерін немесе өлшемдерін жазыңдар.</p>
+  <p>3. Қажетті формуланы қолданыңдар.</p>
+  <p>4. Жауапты тексеріңдер.</p>
+ `)}
+ ${solution("Толық шығарылуы",t[2])}
+ <button class="action" onclick="openBoard()">✎ Тақтада шығару</button>
+`));
+
+/* 15 СҰРАҚТЫҚ КОМАНДАЛЫҚ ОЙЫН */
+const questions=[
+ ["Дұрыс көпжақ неше түрлі?",["3","4","5","6"],2],
+ ["Тетраэдрдің жақтары нешеу?",["4","6","8","12"],0],
+ ["Кубтың неше қыры бар?",["6","8","12","20"],2],
+ ["Октаэдрдің жақтары қандай?",["Шаршы","Үшбұрыш","Бесбұрыш","Алтыбұрыш"],1],
+ ["Додекаэдрдің жақтары нешеу?",["8","12","20","30"],1],
+ ["Икосаэдрде неше үшбұрышты жақ бар?",["8","12","16","20"],3],
+ ["Эйлер формуласы?",["V−E+F=2","V+E+F=2","V−E=F","V+F=E"],0],
+ ["Кубтың төбелері нешеу?",["4","6","8","12"],2],
+ ["Тетраэдрдің қырлары нешеу?",["4","6","8","12"],1],
+ ["Октаэдрдің төбелері нешеу?",["4","6","8","12"],1],
+ ["Додекаэдрдің қырлары нешеу?",["12","20","30","60"],2],
+ ["Икосаэдрдің төбелері нешеу?",["8","12","20","30"],1],
+ ["Куб қыры 5 см. Көлемі?",["25","100","125","150"],2],
+ ["Куб қыры 4 см. Толық беті?",["16","64","96","128"],2],
+ ["E=30, F=20. V қанша?",["10","12","18","20"],1]
+];
+let gameAnswers={},scores=[0,0,0];
+
+for(let i=0;i<4;i++)add("game","Командалық ойын · "+(i+1)+"-кезең",`
+ <span class="tag">15 СҰРАҚ · 3 КОМАНДА · +10 ҰПАЙ</span>
+ <div class="scoreGrid">
+  <div class="score">1-команда<b id="team0">0</b></div>
+  <div class="score">2-команда<b id="team1">0</b></div>
+  <div class="score">3-команда<b id="team2">0</b></div>
+ </div>
+ <div id="gameQuestions"></div>
+ <button class="action" onclick="resetGame()">↻ Қайта бастау</button>
+`);
+
+add("homework","Үй жұмысы · Екі есеп",`
+ ${card("1-есеп. Дұрыс көпжақ",`
+  <p>Октаэдрдің <strong>8 жағы</strong>,
+  <strong>12 қыры</strong> бар.</p>
+  <p>Эйлер формуласын пайдаланып,
+  төбелер санын есептеңдер.</p>
+ `)}
+ ${card("2-есеп. Куб",`
+  <p>Кубтың қыры <strong>17 см</strong>.</p>
+  <p>Толық бетінің ауданын және көлемін есептеңдер.</p>
+ `)}
+`);
+add("homework","Үй жұмысы · Сызба және талдау",`
+ ${picture("dodeca","Дұрыс додекаэдр")}
+ ${card("3-тапсырма. Салыстыру",`
+  <p>Бес дұрыс көпжақтың аттарын жазыңдар.
+  Әрқайсысының жақтар, қырлар және
+  төбелер санын кестеге орналастырыңдар.</p>
+ `)}
+ ${card("4-тапсырма. Геометриялық сызба",`
+  <p>Куб пен тетраэдрдің сызбасын салыңдар.
+  Олардың жақтарының пішіні қалай
+  ерекшеленетінін түсіндіріңдер.</p>
+ `)}
+`);
+add("finish","§5. Дұрыс көпжақтар — қорытынды",`
+ <p class="lead">Біз бес дұрыс көпжақты таныдық,
+ олардың жақ, қыр және төбелер санын
+ есептеп, Эйлер формуласын қолдандық.</p>
+ <div class="grid2">
+  ${picture("cube","Гексаэдр")}
+  ${picture("octa","Октаэдр")}
+  ${picture("icosa","Икосаэдр")}
+  ${picture("tetra","Тетраэдр")}
+ </div>
+ <div class="formula">V − E + F = 2</div>
+ <div class="formula">S<sub>куб</sub> = 6a²</div>
+ <div class="formula">V<sub>куб</sub> = a³</div>
+ ${card("Қайталау сұрақтары",`
+  <p>1. Дұрыс көпжақ дегеніміз не?</p>
+  <p>2. Оның неше түрі бар?</p>
+  <p>3. Додекаэдр мен икосаэдрдің айырмашылығы қандай?</p>
+  <p>4. Эйлер формуласын түсіндіріңдер.</p>
+  <p>5. Кубтың толық беті қалай есептеледі?</p>
+ `)}
+ <button class="action" onclick="goTo(0)">Бастапқы бетке қайту</button>
+`);
+
+/* ===== 3. НАВИГАЦИЯ ===== */
+const sections=[
+ ["intro","🏠 Кіріспе"],["theory","📖 Түсіндірме"],
+ ["notes","📝 Конспект"],["tasks","📐 4 деңгей"],
+ ["game","🏆 Командалық ойын"],["homework","📚 Үй жұмысы"],
+ ["finish","✅ Қорытынды"]
+];
+let slideIndex=0;
+function createSidebar(){
+ const root=document.getElementById("sectionButtons");
+ sections.forEach(([id,label])=>{
+  const b=document.createElement("button");
+  b.className="sideBtn";b.dataset.section=id;b.textContent=label;
+  b.onclick=()=>{
+   const i=slides.findIndex(s=>s.section===id);
+   if(i>=0)goTo(i);
+  };
+  root.appendChild(b);
+ });
+}
+function goTo(i){
+ slideIndex=Math.max(0,Math.min(slides.length-1,i));
+ const s=slides[slideIndex];
+ const label=sections.find(x=>x[0]===s.section)[1];
+ document.getElementById("slideContent").innerHTML=
+  `<div class="eyebrow">${label}</div><h1>${s.title}</h1>${s.html}`;
+ document.getElementById("counter").textContent=
+  (slideIndex+1)+" / "+slides.length;
+ document.getElementById("prevBtn").disabled=slideIndex===0;
+ document.getElementById("nextBtn").disabled=slideIndex===slides.length-1;
+ document.querySelectorAll(".sideBtn").forEach(b=>
+  b.classList.toggle("active",b.dataset.section===s.section)
+ );
+ document.getElementById("slideView").scrollTop=0;
+ if(s.section==="game"){
+  const round=slides.slice(0,slideIndex+1)
+   .filter(x=>x.section==="game").length-1;
+  renderGame(round);
+ }
+}
+function previousSlide(){goTo(slideIndex-1)}
+function nextSlide(){goTo(slideIndex+1)}
+document.addEventListener("keydown",e=>{
+ if(document.getElementById("whiteboard").classList.contains("open"))return;
+ if(e.target.matches("input,textarea"))return;
+ if(e.key==="ArrowLeft")previousSlide();
+ if(e.key==="ArrowRight")nextSlide();
+});
+function renderGame(round){
+ const root=document.getElementById("gameQuestions");
+ if(!root)return;
+ root.innerHTML="";
+ for(let i=round*4;i<Math.min((round+1)*4,questions.length);i++){
+  const q=questions[i],team=i%3;
+  const panel=document.createElement("div");panel.className="card";
+  const h=document.createElement("h3");
+  h.textContent=(i+1)+"-сұрақ · "+(team+1)+"-команда";
+  const p=document.createElement("p");p.textContent=q[0];
+  panel.append(h,p);
+  q[1].forEach((option,j)=>{
+   const b=document.createElement("button");
+   b.className="choice";b.textContent="ABCD"[j]+") "+option;
+   if(gameAnswers[i]!==undefined){
+    b.disabled=true;
+    if(j===q[2])b.classList.add("correct");
+    else if(j===gameAnswers[i])b.classList.add("wrong");
+   }
+   b.onclick=()=>{
+    if(gameAnswers[i]!==undefined)return;
+    gameAnswers[i]=j;
+    if(j===q[2])scores[team]+=10;
+    renderGame(round);
+   };
+   panel.appendChild(b);
+  });
+  if(gameAnswers[i]!==undefined){
+   const msg=document.createElement("p");
+   msg.textContent=gameAnswers[i]===q[2]
+    ?"Дұрыс! +10 ұпай.":"Дұрыс жауап: "+q[1][q[2]];
+   panel.appendChild(msg);
+  }
+  root.appendChild(panel);
+ }
+ scores.forEach((v,i)=>document.getElementById("team"+i).textContent=v);
+ document.getElementById("stars").textContent=
+  scores.reduce((a,b)=>a+b,0);
+}
+function resetGame(){
+ gameAnswers={};scores=[0,0,0];
+ document.getElementById("stars").textContent=0;goTo(slideIndex);
+}
+
+/* ===== 4. АЛМАТЫ УАҚЫТЫ ===== */
+function updateClock(){
+ document.getElementById("clock").textContent=
+  new Intl.DateTimeFormat("kk-KZ",{
+   timeZone:"Asia/Almaty",hour:"2-digit",
+   minute:"2-digit",second:"2-digit",hour12:false
+  }).format(new Date());
+}
+updateClock();setInterval(updateClock,1000);
+let remaining=4800,timerId=null,deadline=0;
+function formatTime(s){
+ return String(Math.floor(s/60)).padStart(2,"0")
+  +":"+String(s%60).padStart(2,"0");
+}
+function paintTimer(){
+ document.getElementById("remaining").textContent=formatTime(remaining);
+ document.getElementById("elapsed").textContent=formatTime(4800-remaining);
+}
+function startTimer(){
+ if(timerId||remaining===0)return;
+ deadline=Date.now()+remaining*1000;
+ timerId=setInterval(()=>{
+  remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));
+  paintTimer();
+  if(remaining===0){pauseTimer();alert("80 минут аяқталды!")}
+ },250);
+}
+function pauseTimer(){
+ if(timerId)remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));
+ clearInterval(timerId);timerId=null;paintTimer();
+}
+function resetTimer(){pauseTimer();remaining=4800;paintTimer()}
+function toggleFullscreen(){
+ if(document.fullscreenElement)document.exitFullscreen?.();
+ else document.documentElement.requestFullscreen?.();
+}
+
+/* ===== 5. КАЛЬКУЛЯТОР ===== */
+const calculator=document.getElementById("calculator");
+const calcInput=document.getElementById("calcInput");
+function openCalc(scientific){
+ calculator.classList.add("open");
+ document.getElementById("calcTitle").textContent=
+  scientific?"Ғылыми калькулятор · DEG":"Калькулятор";
+ const keys=scientific
+  ?["C","⌫","(",")","÷","sin","cos","tan","cot","√",
+    "7","8","9","^","×","4","5","6","π","−",
+    "1","2","3",".","+","0","00","="]
+  :["C","⌫","(",")","÷","7","8","9","×","4","5","6","−",
+    "1","2","3","+","0","00",".","="];
+ const root=document.getElementById("calcKeys");root.innerHTML="";
+ keys.forEach(k=>{
+  const b=document.createElement("button");
+  b.textContent=k;b.onclick=()=>calcPress(k);root.appendChild(b);
+ });
+}
+function closeCalc(){calculator.classList.remove("open")}
+function calcPress(k){
+ if(k==="C"){calcInput.value="";return}
+ if(k==="⌫"){calcInput.value=calcInput.value.slice(0,-1);return}
+ if(k==="="){
+  try{
+   const v=calculate(calcInput.value);
+   if(!Number.isFinite(v))throw Error();
+   calcInput.value=String(Number(v.toPrecision(12)));
+  }catch{calcInput.value="Қате"}
+  return;
+ }
+ const m={
+  "×":"*","÷":"/","−":"-","π":"pi",
+  "√":"sqrt(","sin":"sin(","cos":"cos(",
+  "tan":"tan(","cot":"cot("
+ };
+ calcInput.value+=m[k]??k;
+}
+function calculate(expr){
+ const clean=expr.replace(/\s/g,"");
+ const tokens=clean.match(/(?:\d+(?:\.\d*)?|\.\d+)|[a-z]+|[()+\-*/^]/gi)||[];
+ if(tokens.join("")!==clean)throw Error();
+ let i=0;
+ function atom(){
+  const t=tokens[i++];
+  if(t==="("){
+   const v=addition();
+   if(tokens[i++]!==")")throw Error();
+   return v;
+  }
+  if(t==="pi")return Math.PI;
+  const f={
+   sin:x=>Math.sin(x*Math.PI/180),
+   cos:x=>Math.cos(x*Math.PI/180),
+   tan:x=>Math.tan(x*Math.PI/180),
+   cot:x=>1/Math.tan(x*Math.PI/180),
+   sqrt:x=>Math.sqrt(x)
+  };
+  if(f[t]){
+   if(tokens[i++]!=="(")throw Error();
+   const v=addition();
+   if(tokens[i++]!==")")throw Error();
+   return f[t](v);
+  }
+  if(t===undefined||!Number.isFinite(Number(t)))throw Error();
+  return Number(t);
+ }
+ function power(){
+  if(tokens[i]==="+"){i++;return power()}
+  if(tokens[i]==="-"){i++;return -power()}
+  let v=atom();
+  if(tokens[i]==="^"){i++;v=v**power()}
+  return v;
+ }
+ function multiply(){
+  let v=power();
+  while(["*","/"].includes(tokens[i])){
+   const op=tokens[i++],n=power();
+   v=op==="*"?v*n:v/n;
+  }
+  return v;
+ }
+ function addition(){
+  let v=multiply();
+  while(["+","-"].includes(tokens[i])){
+   const op=tokens[i++],n=multiply();
+   v=op==="+"?v+n:v-n;
+  }
+  return v;
+ }
+ const value=addition();
+ if(i!==tokens.length)throw Error();
+ return value;
+}
+const calcHandle=document.getElementById("calcHandle");
+let calcDrag=null;
+calcHandle.addEventListener("pointerdown",e=>{
+ if(e.target.closest("button"))return;
+ const r=calculator.getBoundingClientRect();
+ calcDrag={x:e.clientX,y:e.clientY,left:r.left,top:r.top};
+ calcHandle.setPointerCapture(e.pointerId);
+});
+calcHandle.addEventListener("pointermove",e=>{
+ if(!calcDrag)return;
+ calculator.style.left=Math.max(0,Math.min(
+  innerWidth-calculator.offsetWidth,
+  calcDrag.left+e.clientX-calcDrag.x
+ ))+"px";
+ calculator.style.top=Math.max(0,Math.min(
+  innerHeight-calculator.offsetHeight,
+  calcDrag.top+e.clientY-calcDrag.y
+ ))+"px";
+});
+calcHandle.addEventListener("pointerup",()=>calcDrag=null);
+calcHandle.addEventListener("pointercancel",()=>calcDrag=null);
+
+/* ===== 6. СЕНСОРЛЫҚ ТАҚТА ===== */
+const board=document.getElementById("whiteboard");
+const area=document.getElementById("boardArea");
+const canvas=document.getElementById("boardCanvas");
+const ctx=canvas.getContext("2d");
+const cursor=document.getElementById("eraserCursor");
+const colorInput=document.getElementById("boardColor");
+const widthInput=document.getElementById("boardWidth");
+const ink=document.createElement("canvas");
+const ic=ink.getContext("2d");
+
+let vw=1,vh=1,dpr=1,zoom=1,panX=0,panY=0;
+let boardTool="pen",gridVisible=false,active=null;
+let panDrag=null,activePointer=null,anglePoints=[];
+let pages=[{objects:[]}],pageIndex=0,objects=pages[0].objects;
+let history=[],future=[];
+const images=new Map();
+
+try{
+ const saved=JSON.parse(localStorage.getItem("mat5_board_v1")||"null");
+ if(Array.isArray(saved)&&saved.length&&saved.every(p=>Array.isArray(p.objects))){
+  pages=saved;objects=pages[0].objects;
+ }
+}catch(e){console.warn(e)}
+function savePages(){
+ pages[pageIndex].objects=objects;
+ try{localStorage.setItem("mat5_board_v1",JSON.stringify(pages))}
+ catch(e){console.warn(e)}
+}
+function resetHistory(){history=[JSON.stringify(objects)];future=[]}
+function commit(){
+ history.push(JSON.stringify(objects));
+ if(history.length>50)history.shift();
+ future=[];savePages();
+}
+function undoBoard(){
+ if(history.length<2)return;
+ future.push(history.pop());objects=JSON.parse(history.at(-1));
+ savePages();renderBoard();
+}
+function redoBoard(){
+ if(!future.length)return;
+ const state=future.pop();history.push(state);
+ objects=JSON.parse(state);savePages();renderBoard();
+}
+function updatePages(){
+ document.getElementById("pageCount").textContent=
+  (pageIndex+1)+" / "+pages.length;
+ const root=document.getElementById("pagesList");root.innerHTML="";
+ pages.forEach((p,i)=>{
+  const b=document.createElement("button");
+  b.textContent=(i+1)+"-бет"+(i===pageIndex?" ✓":"");
+  if(i===pageIndex)b.className="active";
+  b.onclick=()=>loadPage(i);root.appendChild(b);
+ });
+}
+function loadPage(i){
+ if(i<0||i>=pages.length)return;
+ savePages();pageIndex=i;objects=pages[i].objects;
+ active=null;anglePoints=[];
+ resetHistory();updatePages();renderBoard();
+}
+function addBoardPage(){
+ savePages();pages.push({objects:[]});
+ loadPage(pages.length-1);savePages();
+}
+function prevBoardPage(){loadPage(pageIndex-1)}
+function nextBoardPage(){loadPage(pageIndex+1)}
+function togglePages(){
+ document.getElementById("pagesPanel").classList.toggle("open");
+ updatePages();
+}
+function deleteBoardPage(){
+ if(pages.length===1){alert("Соңғы бетті өшіруге болмайды.");return}
+ if(!confirm("Осы бетті өшіреміз бе?"))return;
+ pages.splice(pageIndex,1);
+ pageIndex=Math.min(pageIndex,pages.length-1);
+ objects=pages[pageIndex].objects;
+ resetHistory();savePages();updatePages();renderBoard();
+}
+function openBoard(){
+ board.classList.add("open");resizeCanvas();updatePages();
+}
+function closeBoard(){
+ savePages();hideEraser();board.classList.remove("open");
+}
+function resizeCanvas(){
+ const r=area.getBoundingClientRect();
+ vw=Math.max(1,r.width);vh=Math.max(1,r.height);
+ dpr=Math.min(devicePixelRatio||1,2);
+ canvas.width=Math.round(vw*dpr);
+ canvas.height=Math.round(vh*dpr);
+ ink.width=canvas.width;ink.height=canvas.height;
+ renderBoard();
+}
+window.addEventListener("resize",()=>{
+ if(board.classList.contains("open"))resizeCanvas();
+});
+function screenPoint(e){
+ const r=canvas.getBoundingClientRect();
+ return{x:e.clientX-r.left,y:e.clientY-r.top};
+}
+function world(p){return{x:(p.x-panX)/zoom,y:(p.y-panY)/zoom}}
+function screen(p){return{x:p.x*zoom+panX,y:p.y*zoom+panY}}
+function updateCursorSize(){
+ const size=Number(widthInput.value)*6*zoom;
+ cursor.style.width=size+"px";cursor.style.height=size+"px";
+}
+function showEraser(e){
+ if(boardTool!=="eraser")return;
+ const p=screenPoint(e);
+ cursor.style.left=p.x+"px";cursor.style.top=p.y+"px";
+ updateCursorSize();cursor.style.display="block";
+}
+function hideEraser(){cursor.style.display="none"}
+widthInput.addEventListener("input",updateCursorSize);
+function selectTool(name){
+ boardTool=name;anglePoints=[];
+ document.querySelectorAll("[data-tool]").forEach(b=>
+  b.classList.toggle("active",b.dataset.tool===name)
+ );
+ area.classList.toggle("eraserMode",name==="eraser");
+ hideEraser();
+ canvas.style.cursor=name==="hand"?"grab":name==="eraser"?"none":"crosshair";
+ updateStatus();
+}
+function updateStatus(){
+ const z=Math.round(zoom*100)+"%";
+ document.getElementById("zoomCount").textContent=z;
+ document.getElementById("boardStatus").textContent=
+  boardTool==="eraser"?"Өшіргіш · 100% өшіру · "+z:boardTool+" · "+z;
+}
+function setZoom(value,x=vw/2,y=vh/2){
+ value=Math.max(.25,Math.min(3,value));
+ const wx=(x-panX)/zoom,wy=(y-panY)/zoom;
+ zoom=value;panX=x-wx*zoom;panY=y-wy*zoom;
+ updateStatus();updateCursorSize();renderBoard();
+}
+function zoomBoard(f){setZoom(zoom*f)}
+function resetBoardView(){
+ zoom=1;panX=0;panY=0;updateStatus();updateCursorSize();renderBoard();
+}
+function toggleGrid(){gridVisible=!gridVisible;renderBoard()}
+canvas.addEventListener("wheel",e=>{
+ e.preventDefault();const p=screenPoint(e);
+ setZoom(zoom*(e.deltaY<0?1.1:1/1.1),p.x,p.y);
+},{passive:false});
+
+/* ===== 7. СЫЗҒЫШ ПЕН ТРАНСПОРТИР ===== */
+const instruments={
+ ruler:{x:320,y:155,w:420,h:90,scale:1,rot:0,visible:false},
+ protractor:{x:410,y:265,w:380,h:210,scale:1,rot:0,visible:false},
+ square:{x:380,y:260,w:290,h:290,scale:1,rot:0,visible:false}
+};
+function updateInstrument(id){
+ const t=instruments[id],el=document.getElementById(id);
+ el.classList.toggle("visible",t.visible);
+ el.style.left=t.x+"px";el.style.top=t.y+"px";
+ el.style.setProperty("--rot",t.rot+"deg");
+ el.style.setProperty("--scale",t.scale);
+}
+function toggleInstrument(id){
+ instruments[id].visible=!instruments[id].visible;updateInstrument(id);
+}
+function hideInstrument(id){
+ instruments[id].visible=false;updateInstrument(id);
+}
+function resizeInstrument(id,f){
+ const t=instruments[id];
+ t.scale=Math.max(.35,Math.min(3,t.scale*f));updateInstrument(id);
+}
+function rotateInstrument(id,a){
+ instruments[id].rot+=a;updateInstrument(id);
+}
+Object.entries(instruments).forEach(([id,t])=>{
+ const handle=document.querySelector("#"+id+" .drag");
+ let drag=null;
+ handle.addEventListener("pointerdown",e=>{
+  e.preventDefault();e.stopPropagation();
+  drag={x:e.clientX,y:e.clientY,left:t.x,top:t.y};
+  handle.setPointerCapture(e.pointerId);
+ });
+ handle.addEventListener("pointermove",e=>{
+  if(!drag)return;
+  t.x=drag.left+e.clientX-drag.x;
+  t.y=drag.top+e.clientY-drag.y;updateInstrument(id);
+ });
+ handle.addEventListener("pointerup",()=>drag=null);
+ handle.addEventListener("pointercancel",()=>drag=null);
+ updateInstrument(id);
+});
+const NS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,text){
+ const el=document.createElementNS(NS,tag);
+ Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+ if(text!==undefined)el.textContent=text;
+ return el;
+}
+const rsvg=document.getElementById("rulerSVG");
+rsvg.appendChild(svgEl("rect",{
+ x:2,y:8,width:416,height:75,rx:6,
+ fill:"#f0cc7b","fill-opacity":".85",
+ stroke:"#b58c43","stroke-width":2
+}));
+for(let i=0;i<=40;i++){
+ const x=10+i*10,big=i%5===0;
+ rsvg.appendChild(svgEl("line",{
+  x1:x,y1:10,x2:x,y2:big?42:26,
+  stroke:"#604821","stroke-width":big?2:1
+ }));
+ if(big)rsvg.appendChild(svgEl("text",{
+  x:x-4,y:62,fill:"#604821","font-size":12
+ },String(i/5)));
+}
+const psvg=document.getElementById("protractorSVG");
+psvg.appendChild(svgEl("path",{
+ d:"M20 195 A170 170 0 0 1 360 195 L20 195 Z",
+ fill:"#90c9ed","fill-opacity":".48",stroke:"#287eac","stroke-width":3
+}));
+for(let d=0;d<=180;d+=5){
+ const a=Math.PI-d*Math.PI/180,r=d%10===0?140:153;
+ psvg.appendChild(svgEl("line",{
+  x1:190+r*Math.cos(a),y1:195-r*Math.sin(a),
+  x2:190+168*Math.cos(a),y2:195-168*Math.sin(a),
+  stroke:"#286d95","stroke-width":d%10===0?2:1
+ }));
+ if(d%30===0)psvg.appendChild(svgEl("text",{
+  x:190+116*Math.cos(a),y:195-116*Math.sin(a),
+  "text-anchor":"middle",fill:"#18587b","font-size":12
+ },String(d)));
+}
+function localPoint(p,t){
+ const a=-t.rot*Math.PI/180,dx=p.x-t.x,dy=p.y-t.y;
+ return{
+  x:(dx*Math.cos(a)-dy*Math.sin(a))/t.scale+t.w/2,
+  y:(dx*Math.sin(a)+dy*Math.cos(a))/t.scale+t.h/2
+ };
+}
+function insideInstrument(p,t,id){
+ if(!t.visible)return false;
+ const q=localPoint(p,t);
+ if(id==="ruler")return q.x>=2&&q.x<=418&&q.y>=8&&q.y<=83;
+ if(id==="protractor")return q.y<=195&&
+  (q.x-190)**2+(q.y-195)**2<=170**2;
+ return q.x>=18&&q.x<=274&&q.y>=q.x&&q.y<=274;
+}
+function covered(p){
+ return Object.entries(instruments).some(([id,t])=>insideInstrument(p,t,id));
+}
+
+/* ===== 8. ТАҚТАҒЫ СЫЗУ ===== */
+function getImage(src){
+ if(images.has(src))return images.get(src);
+ const im=new Image();images.set(src,im);
+ im.onload=renderBoard;im.src=src;return im;
+}
+function paintObject(c,o){
+ c.save();
+ c.lineWidth=o.size||4;
+ c.lineCap="round";c.lineJoin="round";
+ c.strokeStyle=o.color||"#1979cc";c.fillStyle=o.color||"#1979cc";
+
+ if(["pen","highlighter","eraser"].includes(o.type)){
+  if(o.type==="highlighter"){
+   c.globalAlpha=.28;c.lineWidth=(o.size||4)*4;
+  }
+  if(o.type==="eraser"){
+   c.globalCompositeOperation="destination-out";
+   c.globalAlpha=1;c.lineWidth=(o.size||4)*6;
+  }
+  const pts=o.points||[];
+  if(pts.length){
+   c.beginPath();c.moveTo(pts[0].x,pts[0].y);
+   if(pts.length===1)c.lineTo(pts[0].x+.01,pts[0].y+.01);
+   else pts.slice(1).forEach(p=>c.lineTo(p.x,p.y));
+   c.stroke();
+  }
+ }
+ if(o.type==="text"){
+  c.font="700 30px Manrope,Arial";c.textBaseline="top";
+  (o.text||"").split("\n").forEach((line,i)=>
+   c.fillText(line,o.x,o.y+i*38)
+  );
+ }
+ if(["line","arrow"].includes(o.type)){
+  c.beginPath();c.moveTo(o.x1,o.y1);c.lineTo(o.x2,o.y2);c.stroke();
+  if(o.type==="arrow"){
+   const a=Math.atan2(o.y2-o.y1,o.x2-o.x1);
+   [-.5,.5].forEach(d=>{
+    c.beginPath();c.moveTo(o.x2,o.y2);
+    c.lineTo(o.x2-18*Math.cos(a+d),o.y2-18*Math.sin(a+d));
+    c.stroke();
+   });
+  }
+ }
+ if(o.type==="rect")c.strokeRect(o.x1,o.y1,o.x2-o.x1,o.y2-o.y1);
+ if(o.type==="circle"){
+  c.beginPath();
+  c.ellipse((o.x1+o.x2)/2,(o.y1+o.y2)/2,
+   Math.max(.1,Math.abs(o.x2-o.x1)/2),
+   Math.max(.1,Math.abs(o.y2-o.y1)/2),0,0,Math.PI*2);
+  c.stroke();
+ }
+ if(o.type==="compass"){
+  c.beginPath();c.arc(o.x1,o.y1,Math.hypot(
+   o.x2-o.x1,o.y2-o.y1
+  ),0,Math.PI*2);c.stroke();
+ }
+ if(o.type==="triangle"){
+  c.beginPath();c.moveTo((o.x1+o.x2)/2,o.y1);
+  c.lineTo(o.x2,o.y2);c.lineTo(o.x1,o.y2);
+  c.closePath();c.stroke();
+ }
+ if(o.type==="table"){
+  for(let i=0;i<=4;i++){
+   const x=o.x1+(o.x2-o.x1)*i/4;
+   const y=o.y1+(o.y2-o.y1)*i/4;
+   c.beginPath();
+   c.moveTo(x,o.y1);c.lineTo(x,o.y2);
+   c.moveTo(o.x1,y);c.lineTo(o.x2,y);c.stroke();
+  }
+ }
+ if(o.type==="angle"){
+  const {a,b,d}=o;
+  c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.lineTo(d.x,d.y);
+  c.stroke();
+  const ux=a.x-b.x,uy=a.y-b.y,vx=d.x-b.x,vy=d.y-b.y;
+  const den=Math.hypot(ux,uy)*Math.hypot(vx,vy);
+  if(den){
+   const deg=Math.acos(Math.max(-1,Math.min(1,(ux*vx+uy*vy)/den)))
+    *180/Math.PI;
+   c.font="700 22px Arial";
+   c.fillText(deg.toFixed(1)+"°",b.x+12,b.y-15);
+  }
+ }
+ if(o.type==="image"){
+  const im=getImage(o.src);
+  if(im.complete&&im.naturalWidth)c.drawImage(im,o.x,o.y,o.w,o.h);
+ }
+ c.restore();
+}
+function drawGrid(){
+ if(!gridVisible)return;
+ const step=50*zoom;if(step<8)return;
+ const sx=((panX%step)+step)%step,sy=((panY%step)+step)%step;
+ ctx.save();ctx.beginPath();ctx.strokeStyle="#e4edf5";ctx.lineWidth=1;
+ for(let x=sx;x<vw;x+=step){ctx.moveTo(x,0);ctx.lineTo(x,vh)}
+ for(let y=sy;y<vh;y+=step){ctx.moveTo(0,y);ctx.lineTo(vw,y)}
+ ctx.stroke();ctx.restore();
+}
+function renderBoard(){
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ ctx.clearRect(0,0,vw,vh);
+ ctx.fillStyle="white";ctx.fillRect(0,0,vw,vh);
+ drawGrid();
+ ic.setTransform(1,0,0,1,0,0);
+ ic.clearRect(0,0,ink.width,ink.height);
+ ic.setTransform(dpr,0,0,dpr,0,0);
+ ic.translate(panX,panY);ic.scale(zoom,zoom);
+ objects.forEach(o=>paintObject(ic,o));
+ if(active)paintObject(ic,active);
+ ctx.drawImage(ink,0,0,vw,vh);
+}
+
+/* ===== 9. САУСАҚПЕН ЖАЗУ ЖӘНЕ ӨШІРУ ===== */
+function startDrawing(e){
+ if(activePointer!==null)return;
+ if(e.button!==undefined&&e.button!==0)return;
+ e.preventDefault();activePointer=e.pointerId;
+ canvas.setPointerCapture(e.pointerId);
+ const s=screenPoint(e),p=world(s);
+ if(boardTool==="eraser")showEraser(e);
+
+ if(boardTool==="hand"){
+  panDrag={x:s.x,y:s.y,px:panX,py:panY};return;
+ }
+ if(boardTool==="text"){
+  activePointer=null;
+  const value=prompt("Мәтінді енгізіңіз:");
+  if(value){
+   objects.push({type:"text",text:value,x:p.x,y:p.y,color:colorInput.value});
+   commit();renderBoard();
+  }
+  return;
+ }
+ if(boardTool==="angle"){
+  activePointer=null;anglePoints.push(p);
+  if(anglePoints.length===3){
+   objects.push({
+    type:"angle",a:anglePoints[0],b:anglePoints[1],
+    d:anglePoints[2],color:colorInput.value,
+    size:Number(widthInput.value)
+   });
+   anglePoints=[];commit();renderBoard();
+  }
+  return;
+ }
+ if(covered(s)){activePointer=null;return}
+ const size=Number(widthInput.value),color=colorInput.value;
+ if(["pen","highlighter","eraser"].includes(boardTool)){
+  active={type:boardTool,points:[p],color,size};
+ }else{
+  active={type:boardTool,x1:p.x,y1:p.y,x2:p.x,y2:p.y,color,size};
+ }
+ renderBoard();
+}
+function moveDrawing(e){
+ if(boardTool==="eraser"&&
+   (e.pointerType==="mouse"||e.pointerId===activePointer))showEraser(e);
+ if(e.pointerId!==activePointer)return;
+ e.preventDefault();
+ const s=screenPoint(e),p=world(s);
+ if(panDrag){
+  panX=panDrag.px+s.x-panDrag.x;
+  panY=panDrag.py+s.y-panDrag.y;
+  renderBoard();return;
+ }
+ if(!active)return;
+ if(["pen","highlighter","eraser"].includes(active.type)){
+  const pts=active.points,last=pts.at(-1),old=screen(last);
+  const n=Math.max(1,Math.ceil(Math.hypot(s.x-old.x,s.y-old.y)/2));
+  for(let i=1;i<=n;i++){
+   const at={
+    x:old.x+(s.x-old.x)*i/n,
+    y:old.y+(s.y-old.y)*i/n
+   };
+   if(covered(at)){
+    objects.push(active);active=null;commit();renderBoard();return;
+   }
+  }
+  if(Math.hypot(p.x-last.x,p.y-last.y)>.3)pts.push(p);
+ }else{
+  if(covered(s))return;
+  active.x2=p.x;active.y2=p.y;
+ }
+ renderBoard();
+}
+function finishDrawing(e){
+ if(e.pointerId!==activePointer)return;
+ if(active){objects.push(active);commit()}
+ active=null;panDrag=null;activePointer=null;
+ if(e.pointerType!=="mouse")hideEraser();
+ renderBoard();
+}
+canvas.addEventListener("pointerdown",startDrawing);
+canvas.addEventListener("pointermove",moveDrawing);
+canvas.addEventListener("pointerup",finishDrawing);
+canvas.addEventListener("pointercancel",e=>{
+ finishDrawing(e);hideEraser();
+});
+canvas.addEventListener("pointerleave",e=>{
+ if(e.pointerType==="mouse"&&activePointer===null)hideEraser();
+});
+function clearBoard(){
+ if(!confirm("Осы бетті тазалаймыз ба?"))return;
+ objects=[];commit();renderBoard();
+}
+document.getElementById("boardFile").addEventListener("change",e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  const im=new Image();
+  im.onload=()=>{
+   const w=Math.min(480,im.width),h=w*im.height/im.width;
+   objects.push({
+    type:"image",src:reader.result,
+    x:(vw/2-panX)/zoom-w/2,y:(vh/2-panY)/zoom-h/2,w,h
+   });
+   commit();renderBoard();
+  };
+  im.src=reader.result;
+ };
+ reader.readAsDataURL(file);e.target.value="";
+});
+function exportBoard(){
+ renderBoard();
+ const a=document.createElement("a");
+ a.download="mat5-taqta.png";
+ a.href=canvas.toDataURL("image/png");a.click();
+}
+document.addEventListener("keydown",e=>{
+ if(!board.classList.contains("open"))return;
+ if(e.key==="Escape")closeBoard();
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="z"){
+  e.preventDefault();undoBoard();
+ }
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="y"){
+  e.preventDefault();redoBoard();
+ }
+});
+
+/* ===== 10. ІСКЕ ҚОСУ ===== */
+createSidebar();
+goTo(0);
+paintTimer();
+resetHistory();
+selectTool("pen");
+updatePages();
+updateStatus();
+</script>
+</body>
+</html>
